@@ -1,11 +1,14 @@
 package com.example.coursework3proper.services;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 
 @Service
 public class FilesServiceImpl implements FilesService {
@@ -27,7 +30,7 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
-    //Лишний метод???
+    //Метод чтения базы данных из JSON не работает ???
     @Override
     public String readSocksFromFile() {
 
@@ -38,6 +41,4 @@ public class FilesServiceImpl implements FilesService {
             throw new RuntimeException(e);
         }
     }
-
-
 }

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 public class SocksController {
 
     private SocksService socksService;
-
     public SocksController(SocksService socksService) {
         this.socksService = socksService;
     }
@@ -40,9 +39,9 @@ public class SocksController {
             summary = "Добавление носков",
             description = "Добавление носков в базу данных"
     )
-    public ResponseEntity<Socks> addSocks(Colors color, Sizes size, int fabricContent, int typeAmount) {
+    public ResponseEntity<Socks> addSocks(Colors color, Sizes size, int fabricContent, int amount) {
 
-        Socks addedSocks = socksService.addSocks(color, size, fabricContent, typeAmount);
+        Socks addedSocks = socksService.addSocks(color, size, fabricContent, amount);
         return ResponseEntity.ok(addedSocks);
 
     }
@@ -74,22 +73,6 @@ public class SocksController {
 
         return ResponseEntity.ok(amountOfSocks);
     }
-
-    //@GetMapping("/2")
-    //@Operation(
-    //        summary = "Получение количества носков(2)",
-    //        description = "Получение количества носков, соответствующих указанным параметрам"
-    //)
-    //public ResponseEntity<Integer> getAmountOfSocks2(Colors color, Sizes size, int fabricContent) {
-    //
-    //    int amountOfSocks = socksService.amountOfSocks2(color, size, fabricContent);
-    //
-    //    if (ObjectUtils.isEmpty(amountOfSocks)) {
-    //        return ResponseEntity.notFound().build();
-    //    }
-    //
-    //    return ResponseEntity.ok(amountOfSocks);
-    //}
 
     @ApiResponses(value = {
             @ApiResponse(

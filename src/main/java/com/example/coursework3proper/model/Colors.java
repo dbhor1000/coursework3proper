@@ -13,9 +13,7 @@ public enum Colors {
     WHITE("Белый"),
     GREY("Серый"),
     PATTERNED("Узорчатый");
-
     String category;
-
     Colors(String category) {
         this.category = category;
     }
