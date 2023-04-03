@@ -18,25 +18,6 @@ public class Socks {
         this.size = size;
         this.fabricContent = fabricContent;
     }
-
-    public Colors getColor() {
-        return color;
-    }
-    public void setColor(Colors color) {
-        this.color = color;
-    }
-    public Sizes getSize() {
-        return size;
-    }
-    public void setSize(Sizes size) {
-        this.size = size;
-    }
-    public int getFabricContent() {
-        return fabricContent;
-    }
-    public void setFabricContent(int fabricContent) {
-        this.fabricContent = fabricContent;
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -16,12 +16,10 @@ import java.util.stream.Collectors;
 public class SocksServiceImpl implements SocksService {
 
     final private FilesService filesService;
-
     public SocksServiceImpl(FilesService filesService) {
         this.filesService = filesService;
     }
     public static Map<Socks, Integer> socksMapAlt = new HashMap<>();
-
     private static int socksId = 0;
 
     @Override
@@ -42,8 +40,10 @@ public class SocksServiceImpl implements SocksService {
     @Override
     public boolean sellSocks(Colors color, Sizes size, int fabricContent, int typeAmount) {
 
-        if (socksMapAlt.get(new Socks(color, size, fabricContent)) >= typeAmount){
-            socksMapAlt.replace(new Socks(color, size, fabricContent), socksMapAlt.get(new Socks(color, size, fabricContent)) - typeAmount);
+        Socks addedSocks = new Socks(color, size, fabricContent);
+        int socksAmount = socksMapAlt.get(addedSocks);
+        if (socksAmount >= typeAmount){
+            socksMapAlt.replace(addedSocks, socksAmount - typeAmount);
             saveSocksToFile();
             return true;
 
@@ -55,8 +55,10 @@ public class SocksServiceImpl implements SocksService {
     @Override
     public boolean deleteSocks(Colors color, Sizes size, int fabricContent, int typeAmount) {
 
-        if (socksMapAlt.get(new Socks(color, size, fabricContent)) >= typeAmount){
-            socksMapAlt.replace(new Socks(color, size, fabricContent), socksMapAlt.get(new Socks(color, size, fabricContent)) - typeAmount);
+        Socks addedSocks = new Socks(color, size, fabricContent);
+        int socksAmount = socksMapAlt.get(addedSocks);
+        if (socksAmount >= typeAmount){
+            socksMapAlt.replace(addedSocks, socksAmount - typeAmount);
             saveSocksToFile();
             return true;
 
@@ -68,14 +70,14 @@ public class SocksServiceImpl implements SocksService {
     @Override
     public Integer amountOfSocks(Colors color, Sizes size, int cottonMin, int cottonMax){
 
-        Map<Socks, Integer> collect = socksMapAlt.entrySet().stream()
-                .filter(map -> map.getKey().getFabricContent() >= cottonMin & map.getKey().getFabricContent() <= cottonMax )
-                .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
-        int totalAmount = 0;
-        for (int value: collect.values()) {
-            totalAmount += value;
-        }
-        return totalAmount;
+        int amountOfSocks = socksMapAlt.entrySet().stream()
+                .filter(map -> map.getKey().getFabricContent() >= cottonMin &
+                        map.getKey().getFabricContent() <= cottonMax & map.getKey().getColor() == color & map.getKey().getSize() == size )
+                .map(Map.Entry::getValue)
+                .mapToInt(x -> x)
+                .sum();
+
+        return amountOfSocks;
     }
 
     private void saveSocksToFile() {
